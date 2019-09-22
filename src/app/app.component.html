@@ -23,7 +23,8 @@
         <span>Description</span>
       </div>
       <div class="col-sm-6">
-        <textarea cols="30" rows="4" name="description" [(ngModel)]="description" maxlength="250"></textarea>
+        <textarea cols="30" rows="4" name="description" [(ngModel)]="description" maxlength="255"></textarea>
+        <span class="pull-right char"><em>{{ 255 - description.length }} characters left</em></span>
       </div>
     </div>
     <div class="text-center" *ngIf="addImage">
