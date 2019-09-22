@@ -1,0 +1,55 @@
+
+<div class="container" style="max-width: 600px;margin-top: 30px;">
+  <div class="card">
+    <div class="card-body">
+      <div class="text-center" *ngIf="!addImage">
+        <button class="btn btn-info" (click)="addImage=true">Add</button>
+      </div>
+      <div class="row" *ngIf="addImage">
+        <div class="col-sm-3">
+          <span>image</span>
+        </div>
+        <div class="col-sm-4">
+          <input type="file" accept="image/*" name="image" (change)="imageUpload($event)">
+        </div>
+        <div class="col-sm-5">
+          <img [src]="previewUrl" alt="" style="width: 100px;
+          height: 50px;">
+        </div>
+      </div>
+    </div>
+    <div class="row" *ngIf="addImage">
+      <div class="col-sm-4">
+        <span>Description</span>
+      </div>
+      <div class="col-sm-6">
+        <textarea cols="30" rows="4" name="description" [(ngModel)]="description" maxlength="250"></textarea>
+      </div>
+    </div>
+    <div class="text-center" *ngIf="addImage">
+      <button class="btn btn-info" [disabled]="previewUrl == undefined && description == undefined" (click)="onSubmit();addImage=false">Submit</button>
+    </div>
+  </div>
+</div>
+<br>
+<ng-container *ngFor="let status of commands">
+  <div class="container">
+    <div class="card" style="width: 455px;margin-left: 325px;">
+      <div class="card-body">
+        <p class="card-text">{{status.description}}</p>
+      </div>
+      <img class="card-img-bottom" [src]="status.image" alt="" style="width:100%">
+      <div class="card-footer">
+        <ng-container *ngIf="status.likeid=='true';else unlike">
+          <img src='assets/like64bit.png' (click)="likePage(status,false)">
+        </ng-container>
+        <ng-template #unlike>
+          <img src='assets/unlike64bit.png' (click)="likePage(status,true)">
+        </ng-template>
+        <label>like{{status.totallike}}</label>
+      </div>
+    </div>
+  </div>
+  <br>
+</ng-container>
+<router-outlet></router-outlet>
