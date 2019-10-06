@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ApiService } from '../app/services/api.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-root',
@@ -7,13 +8,17 @@ import { ApiService } from '../app/services/api.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
+  @ViewChild('videoPlayer') videoplayer: ElementRef;
+  @ViewChild('audioOption') audioplayer: ElementRef;
+  data:any;
   addImage:boolean;
   fileData:any = null;
   previewUrl:any = null;
   description:string;
   commands:any;
   like:boolean;
-  constructor(private api:ApiService){
+  fileUrl;
+  constructor(private api:ApiService,private sanitizer: DomSanitizer){
 
   }
   ngOnInit(){
@@ -57,6 +62,32 @@ export class AppComponent implements OnInit {
     });
     this.previewUrl = null;
     this.description = null;
+  }
+  toggleVideo(event: any) {
+    this.videoplayer.nativeElement.play();
+  }
+
+  toggleAudio(){
+    this.audioplayer.nativeElement.play();
+  }
+  selectType(doc){
+    if(doc.image.split(";")[0].includes('image')){
+      return 'image';
+    }else if (doc.image.split(";")[0].includes('video')){
+      return 'video';
+    }
+    else if(doc.image.split(";")[0].includes('application')){
+      return 'file';
+    }else if(doc.image.split(";")[0].includes('audio')){
+      return 'audio';
+    }
+  }
+  downloadfile(url){
+    this.fileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(window.location.href=url)
+    var aTag = document.createElement('a');
+    aTag.setAttribute('href',this.fileUrl);
+
+    // window.location.href=url
   }
 }
 

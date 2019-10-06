@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-
+import { NgxDocViewerModule } from 'ngx-doc-viewer';
 @NgModule({
   declarations: [
     AppComponent
@@ -14,7 +14,8 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgxDocViewerModule
   ],
   providers: [],
   bootstrap: [AppComponent]
